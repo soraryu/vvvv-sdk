@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<CONFIG>
+    <!-- choose one of those:
+MOVIE
+Optex
+Softkinetic
+Panasonic
+PMD
+Primesense
+MESA
+-->
+    <CAMERA>Softkinetic</CAMERA>
+    <!-- Path to the video file -->
+    <MOVIE_PATH>C:\Softkinetic\iisu\movies\Sample.skv</MOVIE_PATH>
+    <!-- 1/0  Activate /Desactivate processing functionalities  -->
+    <PROCESSING>
+        <SCENE>0</SCENE>
+        <SKELETON>0</SKELETON>
+        <RECORDING>0</RECORDING>
+        <INFO>0</INFO>
+        <UI>0</UI>
+        <UM>0</UM>
+        <CI>0</CI>
+        <CI_GESTURES>1</CI_GESTURES>
+        <CI_SHAPE>1</CI_SHAPE>
+        <CI_MESH>1</CI_MESH>
+        <CI_CENTROIDS>1</CI_CENTROIDS>
+        <SHAPE>1</SHAPE>
+        <CENTROIDS>1</CENTROIDS>
+    </PROCESSING>
+    <OPTIONS>
+        <AUTOCONFIG>1</AUTOCONFIG>
+        <MAX_USERS>1</MAX_USERS>
+        <MAX_CONTROLLERS>2</MAX_CONTROLLERS>
+        <PARAMETERS_LOADING>1</PARAMETERS_LOADING>
+        <PARAMETERS_LOCAL_ONLY>0</PARAMETERS_LOCAL_ONLY>
+        <LOG_TO_STANDARD_OUTPUT>0</LOG_TO_STANDARD_OUTPUT>
+        <!--  Do not change value below: debugging only -->
+        <PULSESNB>1</PULSESNB>
+        <THREADSNB>1</THREADSNB>
+        <ENABLE_SERVER>0</ENABLE_SERVER>
+    </OPTIONS>
+</CONFIG>
