@@ -309,7 +309,7 @@
       <Project>{A526C42E-0522-4B61-AD97-F8694A6AA71E}</Project>
       <Name>FileIONodes</Name>
     </ProjectReference>
-    <ProjectReference Include="nodes\plugins\File\ReaderAdv\ReaderFileAdv.csproj">
+    <ProjectReference Include="nodes\plugins\String\ReaderAdv\ReaderFileAdv.csproj">
       <Project>{AC7D3629-0293-4DBF-9896-9A29F9A6AF7F}</Project>
       <Name>ReaderFileAdv</Name>
     </ProjectReference>
@@ -364,14 +364,6 @@
     <ProjectReference Include="nodes\plugins\Mesh\2dMeshes\2dMeshNodes.csproj">
       <Project>{8890B94E-A57A-494D-B859-ECC54609221A}</Project>
       <Name>2dMeshNodes</Name>
-    </ProjectReference>
-    <ProjectReference Include="nodes\plugins\Mesh\Assimp\Lib\VVVV.Assimp.Lib.vcxproj">
-      <Project>{653F0DBD-DF18-443F-A3C1-6FB763E2D631}</Project>
-      <Name>VVVV.Assimp.Lib</Name>
-    </ProjectReference>
-    <ProjectReference Include="nodes\plugins\Mesh\Assimp\Nodes\VVVV.Assimp.Nodes.csproj">
-      <Project>{7ACEF15A-C8F4-42F9-A6B4-2DB16CDE5EE3}</Project>
-      <Name>VVVV.Assimp.Nodes</Name>
     </ProjectReference>
     <ProjectReference Include="nodes\plugins\Mesh\MeshJoinSubsets\MeshJoinSubsets.csproj">
       <Project>{3F824523-6D45-4A32-A1A5-59A0464F1CDB}</Project>
