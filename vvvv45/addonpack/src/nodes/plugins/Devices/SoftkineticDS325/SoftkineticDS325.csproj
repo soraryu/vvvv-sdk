@@ -37,8 +37,8 @@
     <Compile Include="Core\IInitialized.cs" />
     <Compile Include="DS325Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PXCMStructures.cs" />
-    <Compile Include="PXCUPipeline.cs" />
+    <Compile Include="pxcm-structures-ot.cs" />
+    <Compile Include="pxcupipeline-ot.cs" />
     <Compile Include="Queries\DeviceProperty.cs" />
     <Compile Include="Queries\Face.cs" />
     <Compile Include="Queries\GeoNode.cs" />
@@ -46,9 +46,7 @@
     <Compile Include="Queries\Gesture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dependencies\libpxcupipeline.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="dependencies\libpxcupipeline-ot.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

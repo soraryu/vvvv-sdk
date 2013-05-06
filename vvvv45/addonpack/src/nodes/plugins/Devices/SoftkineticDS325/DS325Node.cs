@@ -93,11 +93,11 @@ namespace VVVV.Nodes
                 //code.OnInit = delegate(bool success) { FOutputEnabled[0] = success; };
                 //code.OnDispose = delegate(bool success) { if(success) FOutputEnabled[0] = false; };
 
-                PXCUPipeline.Mode mode = (PXCUPipeline.Mode) 0;
-                // if (FMode_CAPTURE[0])       mode |= PXCUPipeline.Mode.CAPTURE;
-                if (FMode_FACE_LANDMARK[0]) mode |= PXCUPipeline.Mode.FACE_LANDMARK;
-                if (FMode_FACE_LOCATION[0]) mode |= PXCUPipeline.Mode.FACE_LOCATION;
-                if (FMode_GESTURE[0])       mode |= PXCUPipeline.Mode.GESTURE;
+                PXCUPipelineOT.Mode mode = (PXCUPipelineOT.Mode) 0;
+                // if (FMode_CAPTURE[0])       mode |= PXCUPipelineOT.Mode.CAPTURE;
+                if (FMode_FACE_LANDMARK[0]) mode |= PXCUPipelineOT.Mode.FACE_LANDMARK;
+                if (FMode_FACE_LOCATION[0]) mode |= PXCUPipelineOT.Mode.FACE_LOCATION;
+                if (FMode_GESTURE[0])       mode |= PXCUPipelineOT.Mode.GESTURE;
 
                 // start Update thread
                 code.Init(mode);
