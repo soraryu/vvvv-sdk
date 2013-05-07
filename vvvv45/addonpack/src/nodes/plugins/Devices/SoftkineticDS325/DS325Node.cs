@@ -39,6 +39,8 @@ namespace VVVV.Nodes
         public IDiffSpread<bool> FMode_FACE_LANDMARK;
         [Input("GESTURE Mode", IsSingle = true)]
         public IDiffSpread<bool> FMode_GESTURE;
+		[Input("VOICE RECOGNITION Mode", IsSingle = true)]
+        public IDiffSpread<bool> FMode_VOICE_RECOGNITION;
 
         [Output("Enabled", IsToggle = true, IsSingle = true)]
         public ISpread<bool> FOutputEnabled;
@@ -77,7 +79,7 @@ namespace VVVV.Nodes
             FOutputEnabled.SliceCount = 1;
             FDeviceHandle.SliceCount = 1;
             
-            if (FMode_FACE_LOCATION.IsChanged || FMode_GESTURE.IsChanged || FInputEnable.IsChanged)
+            if (FMode_FACE_LOCATION.IsChanged || FMode_GESTURE.IsChanged || FInputEnable.IsChanged || FMode_VOICE_RECOGNITION.IsChanged)
             {
                 // release device (not good if singleton...)
                 if(code != null)
@@ -95,13 +97,22 @@ namespace VVVV.Nodes
 
                 PXCUPipelineOT.Mode mode = (PXCUPipelineOT.Mode) 0;
                 // if (FMode_CAPTURE[0])       mode |= PXCUPipelineOT.Mode.CAPTURE;
-                if (FMode_FACE_LANDMARK[0]) mode |= PXCUPipelineOT.Mode.FACE_LANDMARK;
-                if (FMode_FACE_LOCATION[0]) mode |= PXCUPipelineOT.Mode.FACE_LOCATION;
-                if (FMode_GESTURE[0])       mode |= PXCUPipelineOT.Mode.GESTURE;
+                if (FMode_FACE_LANDMARK[0]) 	mode |= PXCUPipelineOT.Mode.FACE_LANDMARK;
+                if (FMode_FACE_LOCATION[0]) 	mode |= PXCUPipelineOT.Mode.FACE_LOCATION;
+                if (FMode_GESTURE[0])       	mode |= PXCUPipelineOT.Mode.GESTURE;
+                if (FMode_VOICE_RECOGNITION[0])	mode |= PXCUPipelineOT.Mode.VOICE_RECOGNITION;
+                
 
                 // start Update thread
                 code.Init(mode);
                 FDeviceHandle[0] = code;
+            }
+            
+            // run update on cameras
+            
+            
+            if(!initializationNeeded && FInputEnable[0]) {
+            	code.Update();
             }
 
             FOutputEnabled[0] = code.IsInitialized;

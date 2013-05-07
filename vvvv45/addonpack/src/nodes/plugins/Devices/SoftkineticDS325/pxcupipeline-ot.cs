@@ -7,7 +7,7 @@ accordance with the terms of that agreement
 Copyright(c) 2012-2013 Intel Corporation. All Rights Reserved.
 
 *******************************************************************************/
-using UnityEngine;
+// using UnityEngine;
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;
@@ -57,13 +57,13 @@ public class PXCUPipelineOT: IDisposable {
         disposed=true;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_Create")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_Create")]
     private static extern IntPtr CreateC();
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_Destroy")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_Destroy")]
     private static extern void DestroyC(IntPtr pp);
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_Init")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_Init")]
     private static extern bool InitC(IntPtr pp, Mode mode);
 	
 	public bool Init(Mode mode) {
@@ -72,7 +72,7 @@ public class PXCUPipelineOT: IDisposable {
 		return initialized;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_Close")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_Close")]
     private static extern void CloseC(IntPtr pp);
 	
 	public void Close() {
@@ -85,7 +85,7 @@ public class PXCUPipelineOT: IDisposable {
 		instance=IntPtr.Zero;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_AcquireFrame")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_AcquireFrame")]
     private static extern bool AcquireFrameC(IntPtr pp, bool wait);
 	
 	public bool AcquireFrame(bool wait) {
@@ -93,7 +93,7 @@ public class PXCUPipelineOT: IDisposable {
 		return AcquireFrameC(instance,wait);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_IsDisconnected")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_IsDisconnected")]
     private static extern bool IsDisconnectedC(IntPtr pp);
 	
 	public bool IsDisconnected() {
@@ -101,7 +101,7 @@ public class PXCUPipelineOT: IDisposable {
 		return IsDisconnectedC(instance);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryRGBSize")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryRGBSize")]
     private static extern bool QueryRGBSizeC(IntPtr pp, out int width, out int height);
 	
 	public bool QueryRGBSize(int[] size) {
@@ -109,9 +109,10 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryRGBSizeC(instance,out size[0],out size[1]);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryRGB")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryRGB")]
     private static extern bool QueryRGBC(IntPtr pp, IntPtr data);
 
+    /*
 	public bool QueryRGB(Texture2D text2d) {
 		if (!initialized || text2d==null) return false;
 	    Color32[] pixels=text2d.GetPixels32(0);
@@ -121,8 +122,9 @@ public class PXCUPipelineOT: IDisposable {
 		pixelsHandle.Free();
 		return sts;
 	}
+	*/
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryUVMapSize")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryUVMapSize")]
     private static extern bool QueryUVMapSizeC(IntPtr pp, out int width, out int height);
 
 	public bool QueryUVMapSize(int[] size) {
@@ -130,7 +132,7 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryUVMapSizeC(instance,out size[0],out size[1]);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryUVMap")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryUVMap")]
     private static extern bool QueryUVMapC(IntPtr pp, IntPtr data);
 	
 	public bool QueryUVMap(float[] uvmap) {
@@ -141,7 +143,7 @@ public class PXCUPipelineOT: IDisposable {
 		return sts;
 	}
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryDepthMapSize")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryDepthMapSize")]
     private static extern bool QueryDepthMapSizeC(IntPtr pp, out int width, out int height);
 	
 	public bool QueryDepthMapSize(int[] size) {
@@ -149,7 +151,7 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryDepthMapSizeC(instance,out size[0],out size[1]);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryDepthMap")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryDepthMap")]
     private static extern bool QueryDepthMapC(IntPtr pp, IntPtr data);
 
     public bool QueryDepthMap(short[] depthmap)
@@ -161,7 +163,7 @@ public class PXCUPipelineOT: IDisposable {
         return sts;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryIRMapSize")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryIRMapSize")]
     private static extern bool QueryIRMapSizeC(IntPtr pp, out int width, out int height);
 	
     public bool QueryIRMapSize(int[] size) {
@@ -169,7 +171,7 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryIRMapSizeC(instance,out size[0],out size[1]);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryIRMap")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryIRMap")]
     private static extern bool QueryIRMapC(IntPtr pp, IntPtr data);
 
     public bool QueryIRMap(short[] irmap)
@@ -181,7 +183,7 @@ public class PXCUPipelineOT: IDisposable {
         return sts;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryLabelMapSize")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryLabelMapSize")]
     private static extern bool QueryLabelMapSizeC(IntPtr pp, out int width, out int height);
 	
     public bool QueryLabelMapSize(int[] size) {
@@ -189,9 +191,10 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryLabelMapSizeC(instance,out size[0],out size[1]);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryLabelMap")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryLabelMap")]
     private static extern bool QueryLabelMapC(IntPtr pp, IntPtr data, IntPtr labels);
 	
+    /*
 	public bool QueryLabelMapAsImage(Texture2D text2d) {
 		if (!initialized || text2d==null) return false;
 		byte[] labelmap=new byte[text2d.width*text2d.height];
@@ -204,6 +207,7 @@ public class PXCUPipelineOT: IDisposable {
         text2d.SetPixels32 (pixels, 0);
 		return true;
 	}
+	*/
 
 	public bool QueryLabelMap(byte[] labelmap, int[] labels) {
 		if (!initialized) return false;
@@ -216,7 +220,7 @@ public class PXCUPipelineOT: IDisposable {
 	}
 	
     // gesture functions
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryGeoNode")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryGeoNode")]
     private static extern bool QueryGeoNodeC(IntPtr pp, PXCMGesture.GeoNode.Label body, out PXCMGesture.GeoNode data);
 	
 	public bool QueryGeoNode(PXCMGesture.GeoNode.Label body, out PXCMGesture.GeoNode data) {
@@ -236,7 +240,7 @@ public class PXCUPipelineOT: IDisposable {
 		return found;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryGesture")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryGesture")]
     private static extern bool QueryGestureC(IntPtr pp, PXCMGesture.GeoNode.Label body, out PXCMGesture.Gesture data);
 
 	public bool QueryGesture(PXCMGesture.GeoNode.Label body, out PXCMGesture.Gesture data) {
@@ -246,7 +250,7 @@ public class PXCUPipelineOT: IDisposable {
 	}
 	
     // face analysis functions
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryFaceID")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryFaceID")]
     private static extern bool QueryFaceIDC(IntPtr pp, int fidx, out Int32 face, out UInt64 timeStamp);
 	
 	public bool QueryFaceID(int fidx, out Int32 face, out UInt64 timeStamp) {
@@ -255,7 +259,7 @@ public class PXCUPipelineOT: IDisposable {
 		return QueryFaceIDC(instance, fidx,out face,out timeStamp);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryFaceLocationData")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryFaceLocationData")]
     private static extern bool QueryFaceLocationDataC(IntPtr pp, Int32 face, out PXCMFaceAnalysis.Detection.Data data);
 
     public bool QueryFaceLocationData(Int32 face, out PXCMFaceAnalysis.Detection.Data data) {
@@ -264,7 +268,7 @@ public class PXCUPipelineOT: IDisposable {
 		return false;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryFaceLandmarkPose")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryFaceLandmarkPose")]
     private static extern bool QueryFaceLandmarkPoseC(IntPtr pp, Int32 face, out PXCMFaceAnalysis.Landmark.PoseData data);
 	
     public bool QueryFaceLandmarkPose(Int32 face, out PXCMFaceAnalysis.Landmark.PoseData data) {
@@ -273,7 +277,7 @@ public class PXCUPipelineOT: IDisposable {
 		return false;
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint="PXCUPipeline_QueryFaceLandmarkData")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint="PXCUPipeline_QueryFaceLandmarkData")]
     private static extern bool QueryFaceLandmarkDataC(IntPtr pp, Int32 face, PXCMFaceAnalysis.Landmark.Label label, int idx, out PXCMFaceAnalysis.Landmark.LandmarkData data);
 
     public bool QueryFaceLandmarkData(Int32 face, PXCMFaceAnalysis.Landmark.Label label, int idx, out PXCMFaceAnalysis.Landmark.LandmarkData data) {
@@ -289,7 +293,7 @@ public class PXCUPipelineOT: IDisposable {
         return sts;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_ReleaseFrame")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_ReleaseFrame")]
     private static extern void ReleaseFrameC(IntPtr pp);
 	
     public void ReleaseFrame() {
@@ -297,7 +301,7 @@ public class PXCUPipelineOT: IDisposable {
 		ReleaseFrameC(instance);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryDeviceProperty")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryDeviceProperty")]
     private static extern bool QueryDevicePropertyC(IntPtr pp, PXCMCapture.Device.Property pty, int npty, IntPtr data);
 
     public bool QueryDeviceProperty(PXCMCapture.Device.Property pty, float[] data) {
@@ -308,7 +312,7 @@ public class PXCUPipelineOT: IDisposable {
         return sts;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_SetDeviceProperty")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_SetDeviceProperty")]
     private static extern bool SetDevicePropertyC(IntPtr pp, PXCMCapture.Device.Property pty, int npty, IntPtr data);
 
     public bool SetDeviceProperty(PXCMCapture.Device.Property pty, float[] data) {
@@ -319,31 +323,36 @@ public class PXCUPipelineOT: IDisposable {
         return sts;
     }
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryVoiceRecognized")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryVoiceRecognized")]
     private static extern bool QueryVoiceRecognizedC(IntPtr pp,IntPtr data);
 	
 	public bool QueryVoiceRecognized(out PXCMVoiceRecognition.Recognition data) {
 		data=new PXCMVoiceRecognition.Recognition();
 		data.nBest=new PXCMVoiceRecognition.Recognition.NBest[4];
 		data.dictation="";
+		data.duration = (uint) 0;
+		data.timeStamp = (ulong) 0;
 		if (!initialized) return false;
 		
 		IntPtr data1=Marshal.AllocHGlobal(2112);
 		bool sts=QueryVoiceRecognizedC(instance,data1);
 		if (sts) {
-			data.timeStamp=(ulong)Marshal.ReadInt64(data1,0);
-			for (int i=0;i<4;i++) {
-				data.nBest[i].label=Marshal.ReadInt32(data1,8+i*8);
-				data.nBest[i].confidence=Marshal.ReadInt32(data1,8+i*8+4);
-			}
-			data.duration=(uint)Marshal.ReadInt32(data1,60);
+			// BUGS in their code!
+			// data.timeStamp=(ulong)Marshal.ReadInt64(data1,0);
+			// for (int i=0;i<4;i++) {
+			//	data.nBest[i].label=Marshal.ReadInt32(data1,8+i*8);
+			//	data.nBest[i].confidence=Marshal.ReadInt32(data1,8+i*8+4);
+			//}
+			// data.duration=(uint)Marshal.ReadInt32(data1,60);
+			
+			// data.confidence = data.nBest[0].confidence;
 			data.dictation=Marshal.PtrToStringUni(new IntPtr(data1.ToInt64()+64),1024).Split(new Char[]{'\0'})[0];
 		}
 		Marshal.FreeHGlobal(data1);
-		return sts;
+		return sts && (data.dictation.Length < 1024);
 	}
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_SetVoiceCommand")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_SetVoiceCommand")]
     private static extern bool SetVoiceCommandC(IntPtr pp, [MarshalAs(UnmanagedType.LPWStr)] String cmd);
 	
 	public bool SetVoiceCommands(String[] cmds) {
@@ -353,7 +362,7 @@ public class PXCUPipelineOT: IDisposable {
 		return SetVoiceCommandC(instance,null);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_SetVoiceDictation")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_SetVoiceDictation")]
     private static extern bool SetVoiceDictationC(IntPtr pp);
 	
 	public bool SetVoiceDictation() {
@@ -361,14 +370,14 @@ public class PXCUPipelineOT: IDisposable {
 		return SetVoiceDictationC(instance);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_PauseFrame")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_PauseFrame")]
     private static extern void PauseFrameC(IntPtr pp, Mode mode, bool pause);
 	
 	public void PauseFrame(Mode mode, bool pause) {
 		if (initialized) PauseFrameC(instance,mode,pause);
 	}
 	
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_InitTracker")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_InitTracker")]
     private static extern bool InitTrackerC(IntPtr pp, [MarshalAs(UnmanagedType.LPWStr)] string filename, int width, int height);
 
     public bool InitTracker(string filename, int width, int height) {
@@ -376,7 +385,7 @@ public class PXCUPipelineOT: IDisposable {
         return InitTrackerC(instance, filename, width, height);
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryTargetData")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryTargetData")]
     private static extern bool QueryTargetDataC(IntPtr pp, int targetIndex, out PXCMDCVTracker.TargetData targetData);
 
     public bool QueryTargetData(int targetIndex, out PXCMDCVTracker.TargetData targetData) {
@@ -385,7 +394,7 @@ public class PXCUPipelineOT: IDisposable {
         return false;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryTargetType")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryTargetType")]
     private static extern bool QueryTargetTypeC(IntPtr pp, int targetIndex, out PXCMDCVTracker.TargetType targetType);
 
     public bool QueryTargetType(int targetIndex, out PXCMDCVTracker.TargetType targetType) {
@@ -394,7 +403,7 @@ public class PXCUPipelineOT: IDisposable {
         return false;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryTrackedKeyFrameIndex")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryTrackedKeyFrameIndex")]
     private static extern bool QueryTrackedKeyFrameIndexC(IntPtr pp, int targetIndex, out int frameIndex);
 
     public bool QueryTrackedKeyFrameIndex(int targetIndex, out int frameIndex) {
@@ -403,7 +412,7 @@ public class PXCUPipelineOT: IDisposable {
         return false;
     }
 
-    [DllImport("libpxcupipeline-ot", EntryPoint = "PXCUPipeline_QueryTargetName")]
+    [DllImport("libpxcupipeline-ot.dll", EntryPoint = "PXCUPipeline_QueryTargetName")]
     private static extern bool QueryTargetNameC(IntPtr pp, int targetIndex, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder name);
 
     public bool QueryTargetName(int targetIndex, out string name) {

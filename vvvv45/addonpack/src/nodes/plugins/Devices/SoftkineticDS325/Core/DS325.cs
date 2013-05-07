@@ -30,8 +30,8 @@ namespace VVVV.Nodes.DS325
         /// <summary>
         /// Device mode. Can be any combination of GESTURE, FACE_LANDMARK, FACE_LOCATION, CAPTURE
         /// </summary>
-        public PXCUPipeline.Mode Mode { get { return mode; } set { mode = value; } }
-        volatile PXCUPipeline.Mode mode;
+        public PXCUPipelineOT.Mode Mode { get { return mode; } set { mode = value; } }
+        volatile PXCUPipelineOT.Mode mode;
 
         public OnInitEvent OnInit { get; set; }
         public OnDisposeEvent OnDispose { get; set; }
@@ -44,14 +44,16 @@ namespace VVVV.Nodes.DS325
         {
             // Initialize PXCUPipeline
             InitDevice();
-
+			
+            /*
             while (runThread)
             {
                 // is sleep needed? does it do that internally?
                 // (of course, sleep is always needed!)
-                Thread.Sleep(5);
+                Thread.Sleep(15);
                 Update();
             }
+            */
         }
 
         public string ErrorMessage
@@ -66,16 +68,16 @@ namespace VVVV.Nodes.DS325
             set;
         }
 
-        public PXCUPipeline Pipeline
+        public PXCUPipelineOT Pipeline
         {
             get
             {
                 if (pp == null)
-                    pp = new PXCUPipeline();
+                    pp = new PXCUPipelineOT();
                 return pp;
             }
         }
-        private PXCUPipeline pp;
+        private PXCUPipelineOT pp;
 
         public DS325Device()
         {
@@ -89,13 +91,13 @@ namespace VVVV.Nodes.DS325
         /// </summary>
         public void Init()
         {
-            Init(PXCUPipeline.Mode.GESTURE | PXCUPipeline.Mode.FACE_LANDMARK | PXCUPipeline.Mode.FACE_LOCATION);
+            Init(PXCUPipelineOT.Mode.GESTURE | PXCUPipelineOT.Mode.FACE_LANDMARK | PXCUPipelineOT.Mode.FACE_LOCATION);
         }
 
         /// <summary>
         /// Constructor with certain run modes
         /// </summary>
-        public void Init(PXCUPipeline.Mode mode)
+        public void Init(PXCUPipelineOT.Mode mode)
         {
             Mode = mode;
 
@@ -160,6 +162,7 @@ namespace VVVV.Nodes.DS325
         /// </remarks>
         public void Update()
         {
+        	if(!isInitialized) return;
             if (!Pipeline.AcquireFrame(true)) return;
             OnFrame();
             Pipeline.ReleaseFrame();

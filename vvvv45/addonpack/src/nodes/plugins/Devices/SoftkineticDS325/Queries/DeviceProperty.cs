@@ -38,14 +38,21 @@ namespace VVVV.Nodes.DS325
 
         public void Evaluate(int SpreadMax)
         {
+            // 
+            DS325Node.code.OnFrame -= Update;
+            DS325Node.code.OnFrame += Update;
+        }
+        
+        public void Update()
+        {
             if (FDeviceHandle[0] == null) return;
             device = FDeviceHandle[0];
 
-            FDevicePropertyValue.SliceCount = SpreadMax;
-            for (int i = 0; i < SpreadMax; i++)
+            FDevicePropertyValue.SliceCount = FDeviceProperty.SliceCount;
+            for (int i = 0; i < FDeviceProperty.SliceCount; i++)
             {
                 float[] vals = new float[ValueCount(FDeviceProperty[i])];
-                if (device.Pipeline.QueryDeviceProperty(FDeviceProperty[i], ref vals))
+                if (device.Pipeline.QueryDeviceProperty(FDeviceProperty[i], vals))
                 {
                     FDevicePropertyValue[i].AssignFrom(vals);
                 }

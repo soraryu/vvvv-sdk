@@ -50,7 +50,13 @@ namespace VVVV.Nodes.DS325
 
         public void Evaluate(int SpreadMax)
         {
-            if (FDeviceHandle[0] == null) return;
+            // 
+            DS325Node.code.OnFrame -= Update;
+            DS325Node.code.OnFrame += Update;
+        }
+        
+        public void Update() {
+        	if (FDeviceHandle[0] == null) return;
             device = FDeviceHandle[0];
 
             int faceCount = FFaceCount[0];
@@ -80,7 +86,7 @@ namespace VVVV.Nodes.DS325
                     foreach (var label in FFaceLabels)
                     {
                         PXCMFaceAnalysis.Landmark.LandmarkData[] landmarkData = new PXCMFaceAnalysis.Landmark.LandmarkData[1];
-                        device.Pipeline.QueryFaceLandmarkData(faceId, label, ref landmarkData);
+                        device.Pipeline.QueryFaceLandmarkData(faceId, label, landmarkData);
                         FLandmarkData.AddRange(landmarkData);
                     }
                     //print("landmark left-eye (id=" + faceId + ", x=" + landmarkData.position.x + ", y=" + landmarkData.position.y + ")");
@@ -125,7 +131,7 @@ namespace VVVV.Nodes.DS325
 
             for (int i = 0; i < SpreadMax; i++)
             {
-                position[i] = FLandmarkData[i].position;
+            	position[i] = FLandmarkData[i].position.ToVector3();
                 fid[i] = FLandmarkData[i].fid;
                 label[i] = FLandmarkData[i].label.ToString();
                 lidx[i] = FLandmarkData[i].lidx;

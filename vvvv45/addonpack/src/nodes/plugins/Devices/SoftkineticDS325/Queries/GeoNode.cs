@@ -76,7 +76,14 @@ namespace VVVV.Nodes.DS325
 
         public void Evaluate(int SpreadMax)
         {
-            if (FDeviceHandle[0] == null) return;
+            // 
+            DS325Node.code.OnFrame -= Update;
+            DS325Node.code.OnFrame += Update;
+        }
+        
+        public void Update()
+        {
+        	if (FDeviceHandle[0] == null) return;
             device = FDeviceHandle[0];
 
             //SpreadMax = FHandLabel.SliceCount * FGeoNodeLabel.SliceCount;
@@ -86,7 +93,7 @@ namespace VVVV.Nodes.DS325
             // bin size 1: 1 für jeden selector
             // bin size n: n für jeden selector
 
-            SpreadMax = 0;
+            int SpreadMax = 0;
             for (int i = 0; i < FHandLabel.SliceCount; i++)
             {
                 SpreadMax += FGeoNodeLabel[i].SliceCount;
@@ -129,13 +136,13 @@ namespace VVVV.Nodes.DS325
                         body[index] = nData.body;
                         side[index] = nData.side;
                         confidence[index] = nData.confidence;
-                        positionWorld[index] = FlipYZ(nData.positionWorld);
-                        positionImage[index] = nData.positionImage;
+                        positionWorld[index] = FlipYZ(nData.positionWorld.ToVector3());
+                        positionImage[index] = nData.positionImage.ToVector3();
                         radiusWorld[index] = nData.radiusWorld;
                         radiusImage[index] = nData.radiusImage;
-                        massCenterWorld[index] = FlipYZ(nData.massCenterWorld);
-                        massCenterImage[index] = nData.massCenterImage;
-                        normal[index] = FlipYZ(nData.normal);
+                        massCenterWorld[index] = FlipYZ(nData.massCenterWorld.ToVector3());
+                        massCenterImage[index] = nData.massCenterImage.ToVector3();
+                        normal[index] = FlipYZ(nData.normal.ToVector3());
                         openness[index] = nData.openness;
                         opennessState[index] = nData.opennessState;
                     }

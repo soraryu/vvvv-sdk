@@ -58,9 +58,17 @@ namespace VVVV.Nodes.DS325
 
         public void Evaluate(int SpreadMax)
         {
-            if (FDeviceHandle[0] == null) return;
+            // 
+            DS325Node.code.OnFrame -= Update;
+            DS325Node.code.OnFrame += Update;
+        }
+        
+        void Update() {
+        	if (FDeviceHandle[0] == null) return;
             device = FDeviceHandle[0];
 
+            int SpreadMax = FBodyLabel.SliceCount;
+            
             timeStamp.SliceCount = SpreadMax;
             user.SliceCount = SpreadMax;
             body.SliceCount = SpreadMax;

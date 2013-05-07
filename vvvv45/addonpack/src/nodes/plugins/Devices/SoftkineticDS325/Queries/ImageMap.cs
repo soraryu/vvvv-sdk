@@ -46,7 +46,7 @@ namespace VVVV.Nodes.DS325
         [Import()]
         ILogger FLogger;
         
-        delegate bool QuerySizeMethod(out int width, out int height);
+        delegate bool QuerySizeMethod(int[] size);
         QuerySizeMethod QuerySize;
 
         delegate short[] QueryMapMethod();
@@ -59,7 +59,13 @@ namespace VVVV.Nodes.DS325
 
         public void Evaluate(int SpreadMax)
         {
-            if (FDeviceHandle[0] == null) return;
+            // 
+            DS325Node.code.OnFrame -= Update;
+            DS325Node.code.OnFrame += Update;
+        }
+        
+        public void Update() {
+        	if (FDeviceHandle[0] == null) return;
             device = FDeviceHandle[0];
 
             ////if (FMapType.IsChanged || FDeviceHandle.IsChanged)
@@ -93,9 +99,13 @@ namespace VVVV.Nodes.DS325
 
 
                     // query map size
-                    QuerySize(out width, out height);
+                    int[] size = new int[2];
+                    QuerySize(size);
+                    width = size[0];
+                    height = size[1];
+                    
                     FSize[0] = new Vector2D(width, height);
-
+					
                     if (!addedEvent)
                     {
                         device.OnDispose += delegate
@@ -139,7 +149,7 @@ namespace VVVV.Nodes.DS325
             // create array if needed
             CheckArray();
 
-            device.Pipeline.QueryIRMap(ref valuesInternal);
+            device.Pipeline.QueryIRMap(valuesInternal);
 
            return valuesInternal;
         }
@@ -149,7 +159,7 @@ namespace VVVV.Nodes.DS325
             // create array if needed
             CheckArray();
 
-            device.Pipeline.QueryDepthMap(ref valuesInternal);
+            device.Pipeline.QueryDepthMap(valuesInternal);
 
             return valuesInternal;
         }
@@ -164,7 +174,7 @@ namespace VVVV.Nodes.DS325
             {
                 labelMap = new byte[width * height];
             }
-            device.Pipeline.QueryLabelMap(ref labelMap, out labels);
+            device.Pipeline.QueryLabelMap(labelMap, labels);
 
             for (int i = 0; i < labelMap.Length; i++)
             {

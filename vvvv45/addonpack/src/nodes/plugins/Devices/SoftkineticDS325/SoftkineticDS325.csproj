@@ -33,6 +33,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Glue.cs" />
     <Compile Include="Core\DS325.cs" />
     <Compile Include="Core\IInitialized.cs" />
     <Compile Include="DS325Node.cs" />
@@ -44,9 +45,12 @@
     <Compile Include="Queries\GeoNode.cs" />
     <Compile Include="Queries\ImageMap.cs" />
     <Compile Include="Queries\Gesture.cs" />
+    <Compile Include="Queries\VoiceRecognition.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dependencies\libpxcupipeline-ot.dll" />
+    <None Include="dependencies\libpxcupipeline-ot.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
