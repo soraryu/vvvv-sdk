@@ -265,6 +265,10 @@
       <Project>{4BC4D3F2-77E8-40D5-9A3B-4114A971F399}</Project>
       <Name>SoftkineticDS325</Name>
     </ProjectReference>
+    <ProjectReference Include="nodes\plugins\Devices\SoftkineticDS325\SoftkineticDS325.csproj">
+      <Project>{4BC4D3F2-77E8-40D5-9A3B-4114A971F399}</Project>
+      <Name>SoftkineticDS325</Name>
+    </ProjectReference>
     <ProjectReference Include="nodes\plugins\Devices\SpaceMouse\SpaceMouse.csproj">
       <Project>{3DCB2548-413F-4B0C-9246-1B3A554FC80E}</Project>
       <Name>SpaceMouse</Name>
