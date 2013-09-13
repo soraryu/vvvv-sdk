@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IisuInteractionDesignerProject Version="3.0.19">
+  <Graph id="{4316de6f-2d18-4b13-b2b0-11c9d19d0a55}">
+    <Node id="{1904b855-6ed5-4195-b043-967455502b44}" name="Script" type="lua script">
+      <Content><![CDATA[function init()
+	-- Important note:
+	-- It's best to initialize ALL your variables here. Otherwise, you might get unexpected results.
+	-- See the iisu Interaction Designer manual for more info.
+	left_hand_up = false
+	right_hand_up = false
+	torso_Joystick_Yaxis = 0.0
+	torso_Joystick_Yaxis_Minimum = -20
+	torso_Joystick_Yaxis_Maximum = 45
+	is_bowing = false
+	status = "You're not bowing"
+end
+
+
+function main()
+ pelvis      = USER1_SKELETON_PARTS_Pelvis
+ left_hand   = USER1_SKELETON_PARTS_LeftWrist
+ right_hand  = USER1_SKELETON_PARTS_RightWrist
+ head        = USER1_SKELETON_PARTS_Head
+ ------------------------------------------------------
+ -- Compute the angle of the 2 axis
+ ------------------------------------------------------
+ torso_Joystick_Yaxis_Degrees = SK.axisAngle(head - pelvis, SK.Axis_UP,SK.Axis_FRONT)
+ torso_Joystick_Yaxis_Degrees = Macros.Smooth(torso_Joystick_Yaxis_Degrees,0.2)
+ 
+ ------------------------------------------------------
+ -- remap/rescale the angles to the 0-1 interval
+ ------------------------------------------------------
+if(torso_Joystick_Yaxis_Minimum == torso_Joystick_Yaxis_Maximum) then
+ torso_Joystick_Yaxis = 0
+ else
+ torso_Joystick_Yaxis = (torso_Joystick_Yaxis_Degrees - torso_Joystick_Yaxis_Minimum)/(torso_Joystick_Yaxis_Maximum - torso_Joystick_Yaxis_Minimum)
+ end
+ ------------------------------------------------------
+ 
+ ------------------------------------------------------
+ -- Clamp the angles
+ ------------------------------------------------------
+ -- torso_Joystick_Yaxis_Degrees = math.max( torso_Joystick_Yaxis_Minimum ,math.min( torso_Joystick_Yaxis_Maximum ,torso_Joystick_Yaxis_Degrees))
+ ------------------------------------------------------
+ -------------------------------------------------------------------
+ -- toggle the status of each hand based on the position, the threshold and hysteresis
+ -------------------------------------------------------------------
+if(left_hand_up) then
+ if(left_hand:up() - pelvis:up() &lt; (hand_up_threshold - hand_up_hysteresis) ) then
+ left_hand_up = false
+ end
+ else
+ if((left_hand:up() - pelvis:up()) &gt; hand_up_threshold) then
+ left_hand_up = true
+ end
+ end
+ 
+ -- same for the right hand
+ if(right_hand_up) then
+ if(right_hand:up() - pelvis:up() &lt; (hand_up_threshold - hand_up_hysteresis) ) then
+ right_hand_up = false
+ end
+ else
+ if(right_hand:up() - pelvis:up() &gt; hand_up_threshold) then
+ right_hand_up = true
+ end
+ end
+ 
+ if(torso_Joystick_Yaxis &gt; 0.55) then
+ is_bowing = true
+ else
+ is_bowing = false
+ end
+
+
+
+
+
+end
+
+function main()
+end
+]]></Content>
+    </Node>
+    <Node id="{d70c2aff-e263-4007-96f6-c069f9eefe77}" name="" type="iisu skeleton" />
+    <Node id="{0b695279-3419-4959-8383-6996feb281dc}" name="" type="iisu device" />
+  </Graph>
+  <Movies>
+    <Movie id="AA-F7-21-E1-33-A5-38-F8-33-95-45-B4-11-45-74-F8" />
+  </Movies>
+  <WindowLayout>
+    <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="0" ActivePane="-1">
+      <Contents Count="1">
+        <Content ID="0" PersistString="IID.FormDepth" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" />
+      </Contents>
+      <Panes Count="1">
+        <Pane ID="0" DockState="Document" ActiveContent="0">
+          <Contents Count="1">
+            <Content ID="0" RefID="0" />
+          </Contents>
+        </Pane>
+      </Panes>
+      <DockWindows>
+        <DockWindow ID="0" DockState="Document" ZOrderIndex="1">
+          <NestedPanes Count="1">
+            <Pane ID="0" RefID="0" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+          </NestedPanes>
+        </DockWindow>
+        <DockWindow ID="1" DockState="DockLeft" ZOrderIndex="2">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="2" DockState="DockRight" ZOrderIndex="3">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="3" DockState="DockTop" ZOrderIndex="4">
+          <NestedPanes Count="0" />
+        </DockWindow>
+        <DockWindow ID="4" DockState="DockBottom" ZOrderIndex="5">
+          <NestedPanes Count="0" />
+        </DockWindow>
+      </DockWindows>
+      <FloatWindows Count="0" />
+    </DockPanel>
+  </WindowLayout>
+  <Visualization3D userCentroidsVisible="True" userCentroidVelocitiesVisible="False" skeletonVisible="False" uiControllerVisible="False" uiPointerVisible="False" umActivationZonesVisible="False" umActivationZoneLabelsVisible="False" userBoundingBoxVisible="False" userLabelVisible="False" userPointsVisible="False" userMassCenterVisible="False" userHeightVisible="False" userBodyDirVisible="False" userPrincipalDirVisible="False" cameraFrustumVisible="False" cameraFrustumProjVisible="False" cameraInfoVisible="False" sourceColorMapVisible="False" labelImageVisible="False" scenePointsVisible="False" userMaskVisible="False" depthClipPlanesVisible="False" xyzClipPlanesVisible="False" clipVolumeVisible="False" user1Color="66FF66FF" user2Color="66CCFFFF" user3Color="FF6600FF" user4Color="FFFF00FF" uiController1Color="66FF66FF" uiController2Color="66CCFFFF" uiController3Color="FF6600FF" uiController4Color="FFFF00FF" gridColor="999999FF" gridSize="4" gridSubdivisions="16" ciPalmPositionVisible="False" ciPalmNormalVisible="False" ciPointingDirVisible="False" ciFingerTipsVisible="False" ciCentroidsVisible="False" ciMeshVisible="False" hand1Color="66FF66FF" hand2Color="66CCFFFF">
+    <Camera>
+      <Position x="3" y="-3" z="2.5" />
+      <Orientation yaw="45" pitch="-25" />
+    </Camera>
+  </Visualization3D>
+</IisuInteractionDesignerProject>
